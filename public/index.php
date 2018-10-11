@@ -15,21 +15,41 @@ class main  {
 }
 class html {
     public static function generateTable($records) {
+
+        $html='<table>';
+
         $count = 0;
         foreach ($records as $record) {
             if($count == 0) {
                 $array = $record->returnArray();
                 $fields = array_keys($array);
                 $values = array_values($array);
-                print_r($fields);
-                print_r($values);
+
+                $html.='<tr>';
+                foreach($fields as $field){
+                    $html.='<th>'.htmlspecialchars($field).'</th>';
+                }
+                $html.='</tr>';
+
+                $html.='<tr>';
+                foreach($values as $value){
+                    $html.='<td>'.htmlspecialchars($value).'</td>';
+                }
+                $html.='</tr>';
+
             } else {
                 $array = $record->returnArray();
                 $values = array_values($array);
-                print_r($values);
+                $html.='<tr>';
+                foreach($values as $value){
+                    $html.='<td>'.htmlspecialchars($value).'</td>';
+                }
+                $html.='</tr>';
             }
             $count++;
         }
+        $html.='</table>';
+        print $html;
     }
 }
 
@@ -64,7 +84,7 @@ class record {
         $array = (array) $this;
         return $array;
     }
-    public function createProperty($name = 'first', $value = 'keith') {
+    public function createProperty($name = 'first', $value = 'Bing') {
         $this->{$name} = $value;
     }
 }
